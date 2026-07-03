@@ -83,7 +83,7 @@ test_that('classification models - recipes', {
 
   reticulate::import("torch")
 
-  library(tabfm)
+  library(tfmr)
   suppressPackageStartupMessages(library(recipes))
 
   #-----------------------------------------------------------------------------

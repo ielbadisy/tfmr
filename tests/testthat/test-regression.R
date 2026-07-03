@@ -1,14 +1,14 @@
 test_that("show_env_var returns value when set", {
   withr::with_envvar(
     new = c(TABPFN_TEST_VAR = "hello"),
-    expect_equal(tabfm:::show_env_var("TABPFN_TEST_VAR"), "hello")
+    expect_equal(tfmr:::show_env_var("TABPFN_TEST_VAR"), "hello")
   )
 })
 
 test_that("show_env_var returns not set when empty", {
   withr::with_envvar(
     new = c(TABPFN_TEST_VAR = ""),
-    expect_equal(tabfm:::show_env_var("TABPFN_TEST_VAR"), "<not set>")
+    expect_equal(tfmr:::show_env_var("TABPFN_TEST_VAR"), "<not set>")
   )
 })
 
@@ -148,7 +148,7 @@ test_that('regression models - recipes', {
 
   reticulate::import("torch")
 
-  library(tabfm)
+  library(tfmr)
   library(recipes)
   data(Chicago, package = "modeldata")
 

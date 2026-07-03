@@ -2,6 +2,7 @@
 .pkg_env <- new.env()
 .pkg_env$tab_pfn <- NULL
 .pkg_env$tab_icl <- NULL
+.pkg_env$tab_fm <- NULL
 
 .onLoad <- function(...) {
   # Set PyTorch TorchInductor cache to R's temp directory
@@ -50,6 +51,23 @@
       cli::cli_warn(msg_tabicl_not_available(e))
     }
   )
+
+  tryCatch(
+    .pkg_env$tab_fm <- reticulate::import(
+      "tabfm",
+      delay_load = list(
+        on_error = function(e) {
+          cli::cli_abort(msg_tabfm_not_available(e))
+        },
+        before_load = function() {
+          check_libomp()
+        }
+      )
+    ),
+    python.builtin.ModuleNotFoundError = function(e) {
+      cli::cli_warn(msg_tabfm_not_available(e))
+    }
+  )
 }
 
 .onUnload <- function(libpath) {
@@ -85,6 +103,10 @@ import_tabpfn <- function() {
 
 import_tabicl <- function() {
   .pkg_env$tab_icl
+}
+
+import_tabfm <- function() {
+  .pkg_env$tab_fm
 }
 
 # nocov end

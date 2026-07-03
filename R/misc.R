@@ -21,6 +21,17 @@ msg_tabicl_not_available <- function(cnd) {
   )
 }
 
+msg_tabfm_not_available <- function(cnd) {
+  c(
+    x = "The {.pkg tabfm} Python package is not installed in the discovered Python installation ({.file {reticulate::py_exe()}}).",
+    i = 'Allow reticulate to automatically configure an ephemeral Python environment by
+         removing the Python installation from the order of discovery and restarting the R session.
+         See {.href [Order of Discovery](https://rstudio.github.io/reticulate/dev/articles/versions.html#order-of-discovery)} for more info.',
+    i = 'Or install the {.pkg tabfm} Python package plus a backend extra such as
+        {.code tabfm[pytorch]} or {.code tabfm[jax]} in the selected Python environment.'
+  )
+}
+
 check_libomp <- function() {
   os_info <- Sys.info()[["sysname"]]
   if (os_info != "Darwin") {
@@ -179,6 +190,20 @@ is_tab_pfn_installed <- function() {
 is_tab_icl_installed <- function() {
   suppressWarnings(
     res <- import_tabicl() |>
+      reticulate::py_has_attr("noexists") |>
+      try(silent = TRUE)
+  )
+  !inherits(res, "try-error")
+}
+
+#' Check the TabFM Python package installation
+#'
+#' Attempts to import the Python package.
+#' @return A single logical.
+#' @export
+is_tab_fm_installed <- function() {
+  suppressWarnings(
+    res <- import_tabfm() |>
       reticulate::py_has_attr("noexists") |>
       try(silent = TRUE)
   )

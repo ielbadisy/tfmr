@@ -21,6 +21,6 @@
 # )
 
 library(testthat)
-library(tabfm)
+library(tfmr)
 
-test_check("tabfm")
+test_check("tfmr")
