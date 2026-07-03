@@ -21,7 +21,7 @@
         on_error = function(e) {
           cli::cli_abort(msg_tabpfn_not_available(e))
         },
-        # See https://github.com/tidymodels/tabpfn/issues/3
+        # See https://github.com/ielbadisy/tfmr/issues
         before_load = function() {
           check_libomp()
         }
