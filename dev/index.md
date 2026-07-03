@@ -1,7 +1,14 @@
 # tfmr
 
-tfmr, meaning tabular foundation model wrappers for tabular data, is a
-deep-learning model. See:
+tfmr is an R package for tabular foundation models. It provides a
+consistent S3 API for:
+
+- [`tab_pfn()`](https://tabpfn.tidymodels.org/dev/reference/tab_pfn.md)
+- [`tab_icl()`](https://tabpfn.tidymodels.org/dev/reference/tab_icl.md)
+- [`tab_fm()`](https://tabpfn.tidymodels.org/dev/reference/tab_fm.md)
+
+These models cover classification and regression on tabular data with
+mixed column types. See:
 
 - [*Transformers Can Do Bayesian
   Inference*](https://arxiv.org/abs/2112.10510) (arXiv, 2021)
@@ -11,9 +18,8 @@ deep-learning model. See:
   model*](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C7&q=%22Accurate+predictions+on+small+data+with+a+tabular+foundation+model%22)
   (Nature, 2025)
 
-This R package is a wrapper of the [Python
-library](https://github.com/PriorLabs/tabpfn) via reticulate. It has an
-idiomatic R syntax using standard S3 methods.
+The R interface is implemented through `reticulate` and follows standard
+tidymodels-style S3 methods.
 
 ## Installation
 
@@ -32,9 +38,9 @@ require(pak)
 pak(c("ielbadisy/tfmr"), ask = FALSE)
 ```
 
-You’ll need a Python virtual environment to access the underlying
-library. After installing the R package, tfmr will install the required
-Python bits when you first fit a model:
+You’ll need a Python virtual environment to access the underlying Python
+libraries. After installing the R package, tfmr will install the
+required Python bits when you first fit a model:
 
 ``` R
 > library(tfmr)
@@ -42,7 +48,7 @@ Python bits when you first fit a model:
 > predictors <- mtcars[, -1]
 > outcome <- mtcars[, 1]
 >
-> # XY interface
+> # TabPFN example
 > mod <- tab_pfn(predictors, outcome)
 Downloading uv...Done!
 Downloading cpython-3.12.12 (download) (15.9MiB)
@@ -64,7 +70,7 @@ i 32 data points
 i 10 predictors
 ```
 
-## Example
+## Examples
 
 After loading the package:
 
@@ -73,7 +79,9 @@ After loading the package:
 library(tfmr)
 ```
 
-we can fit a model via the standard x/y interface.
+### TabPFN
+
+Fit a regression model via the standard x/y interface.
 
 ``` r
 
@@ -97,20 +105,20 @@ predict(reg_mod, mtcars[26:32, -1])
 #> # A tibble: 7 × 1
 #>   .pred
 #>   <dbl>
-#> 1  31.4
-#> 2  24.3
-#> 3  24.8
-#> 4  16.4
-#> 5  18.9
-#> 6  14.4
-#> 7  22.5
+#> 1  29.8
+#> 2  25.6
+#> 3  26.2
+#> 4  16.5
+#> 5  19.4
+#> 6  14.7
+#> 7  23.6
 ```
 
-tfmr follows the tidymodels prediction convention: a data frame is
+`tfmr` follows the tidymodels prediction convention: a data frame is
 always returned with a standard set of column names.
 
 For a classification model, the outcome should always be a factor
-vector. For example, using these data from the modeldata package:
+vector. For example, using these data from the `modeldata` package:
 
 ``` r
 
@@ -135,16 +143,16 @@ grid_pred
 #> # A tibble: 625 × 3
 #>    .pred_Class1 .pred_Class2 .pred_class
 #>           <dbl>        <dbl> <fct>      
-#>  1        0.997      0.00273 Class1     
-#>  2        0.998      0.00217 Class1     
-#>  3        0.998      0.00182 Class1     
-#>  4        0.998      0.00155 Class1     
-#>  5        0.998      0.00167 Class1     
-#>  6        0.998      0.00222 Class1     
-#>  7        0.996      0.00438 Class1     
-#>  8        0.989      0.0109  Class1     
-#>  9        0.948      0.0522  Class1     
-#> 10        0.745      0.255   Class1     
+#>  1        0.988      0.0122  Class1     
+#>  2        0.992      0.00823 Class1     
+#>  3        0.993      0.00721 Class1     
+#>  4        0.993      0.00714 Class1     
+#>  5        0.991      0.00944 Class1     
+#>  6        0.982      0.0175  Class1     
+#>  7        0.965      0.0347  Class1     
+#>  8        0.922      0.0775  Class1     
+#>  9        0.799      0.201   Class1     
+#> 10        0.554      0.446   Class1     
 #> # ℹ 615 more rows
 ```
 
@@ -171,10 +179,32 @@ cbind(grid, grid_pred) |>
 
 ![](reference/figures/README-boundaries-1.png)
 
+### TabICL
+
+[`tab_icl()`](https://tabpfn.tidymodels.org/dev/reference/tab_icl.md)
+uses the `tabicl` Python backend.
+
+``` r
+
+icl_mod <- tab_icl(mpg ~ wt + hp, data = mtcars)
+predict(icl_mod, mtcars[1:3, -1])
+```
+
+### TabFM
+
+[`tab_fm()`](https://tabpfn.tidymodels.org/dev/reference/tab_fm.md) uses
+the Google Research TabFM backend.
+
+``` r
+
+fm_mod <- tab_fm(mpg ~ wt + hp, data = mtcars)
+predict(fm_mod, mtcars[1:3, -1])
+```
+
 ## License
 
-[PriorLabs](https://priorlabs.ai/) created the model. Starting with
-version 2.5, using TabPFN requires accepting the model license and
+[PriorLabs](https://priorlabs.ai/) created the TabPFN model. Starting
+with version 2.5, using TabPFN requires accepting the model license and
 setting a token. Each model version (v2.5, v2.6, etc.) has its own
 license that must be accepted individually.
 

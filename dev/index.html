@@ -55,7 +55,13 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>tfmr, meaning tabular foundation model wrappers for tabular data, is a deep-learning model. See:</p>
+<p>tfmr is an R package for tabular foundation models. It provides a consistent S3 API for:</p>
+<ul>
+<li><code><a href="reference/tab_pfn.html">tab_pfn()</a></code></li>
+<li><code><a href="reference/tab_icl.html">tab_icl()</a></code></li>
+<li><code><a href="reference/tab_fm.html">tab_fm()</a></code></li>
+</ul>
+<p>These models cover classification and regression on tabular data with mixed column types. See:</p>
 <ul>
 <li>
 <a href="https://arxiv.org/abs/2112.10510" class="external-link"><em>Transformers Can Do Bayesian Inference</em></a> (arXiv, 2021)</li>
@@ -64,7 +70,7 @@
 <li>
 <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C7&amp;q=%22Accurate+predictions+on+small+data+with+a+tabular+foundation+model%22" class="external-link"><em>Accurate predictions on small data with a tabular foundation model</em></a> (Nature, 2025)</li>
 </ul>
-<p>This R package is a wrapper of the <a href="https://github.com/PriorLabs/tabpfn" class="external-link">Python library</a> via reticulate. It has an idiomatic R syntax using standard S3 methods.</p>
+<p>The R interface is implemented through <code>reticulate</code> and follows standard tidymodels-style S3 methods.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -75,13 +81,13 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://pak.r-lib.org/" class="external-link">pak</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ielbadisy/tfmr"</span><span class="op">)</span>, ask <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p>You’ll need a Python virtual environment to access the underlying library. After installing the R package, tfmr will install the required Python bits when you first fit a model:</p>
+<p>You’ll need a Python virtual environment to access the underlying Python libraries. After installing the R package, tfmr will install the required Python bits when you first fit a model:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(tfmr)</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="sc">&gt;</span></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="er">&gt;</span> predictors <span class="ot">&lt;-</span> mtcars[, <span class="sc">-</span><span class="dv">1</span>]</span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="sc">&gt;</span> outcome <span class="ot">&lt;-</span> mtcars[, <span class="dv">1</span>]</span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="sc">&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="er">&gt;</span> <span class="co"># XY interface</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="er">&gt;</span> <span class="co"># TabPFN example</span></span>
 <span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="er">&gt;</span> mod <span class="ot">&lt;-</span> <span class="fu">tab_pfn</span>(predictors, outcome)</span>
 <span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>Downloading uv...Done<span class="sc">!</span></span>
 <span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>Downloading cpython<span class="dv">-3</span>.<span class="fl">12.12</span> (download) (<span class="fl">15.9</span>MiB)</span>
@@ -103,12 +109,15 @@
 <span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>i <span class="dv">10</span> predictors</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <p>After loading the package:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ielbadisy/tfmr" class="external-link">tfmr</a></span><span class="op">)</span></span></code></pre></div>
-<p>we can fit a model via the standard x/y interface.</p>
+<div class="section level3">
+<h3 id="tabpfn">TabPFN<a class="anchor" aria-label="anchor" href="#tabpfn"></a>
+</h3>
+<p>Fit a regression model via the standard x/y interface.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">364</span><span class="op">)</span></span>
 <span><span class="va">reg_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tab_pfn.html">tab_pfn</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">]</span><span class="op">)</span></span>
@@ -124,15 +133,15 @@
 <span><span class="co">#&gt; # A tibble: 7 × 1</span></span>
 <span><span class="co">#&gt;   .pred</span></span>
 <span><span class="co">#&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  31.4</span></span>
-<span><span class="co">#&gt; 2  24.3</span></span>
-<span><span class="co">#&gt; 3  24.8</span></span>
-<span><span class="co">#&gt; 4  16.4</span></span>
-<span><span class="co">#&gt; 5  18.9</span></span>
-<span><span class="co">#&gt; 6  14.4</span></span>
-<span><span class="co">#&gt; 7  22.5</span></span></code></pre></div>
-<p>tfmr follows the tidymodels prediction convention: a data frame is always returned with a standard set of column names.</p>
-<p>For a classification model, the outcome should always be a factor vector. For example, using these data from the modeldata package:</p>
+<span><span class="co">#&gt; 1  29.8</span></span>
+<span><span class="co">#&gt; 2  25.6</span></span>
+<span><span class="co">#&gt; 3  26.2</span></span>
+<span><span class="co">#&gt; 4  16.5</span></span>
+<span><span class="co">#&gt; 5  19.4</span></span>
+<span><span class="co">#&gt; 6  14.7</span></span>
+<span><span class="co">#&gt; 7  23.6</span></span></code></pre></div>
+<p><code>tfmr</code> follows the tidymodels prediction convention: a data frame is always returned with a standard set of column names.</p>
+<p>For a classification model, the outcome should always be a factor vector. For example, using these data from the <code>modeldata</code> package:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -155,16 +164,16 @@
 <span><span class="co">#&gt; # A tibble: 625 × 3</span></span>
 <span><span class="co">#&gt;    .pred_Class1 .pred_Class2 .pred_class</span></span>
 <span><span class="co">#&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;fct&gt;      </span></span>
-<span><span class="co">#&gt;  1        0.997      0.00273 Class1     </span></span>
-<span><span class="co">#&gt;  2        0.998      0.00217 Class1     </span></span>
-<span><span class="co">#&gt;  3        0.998      0.00182 Class1     </span></span>
-<span><span class="co">#&gt;  4        0.998      0.00155 Class1     </span></span>
-<span><span class="co">#&gt;  5        0.998      0.00167 Class1     </span></span>
-<span><span class="co">#&gt;  6        0.998      0.00222 Class1     </span></span>
-<span><span class="co">#&gt;  7        0.996      0.00438 Class1     </span></span>
-<span><span class="co">#&gt;  8        0.989      0.0109  Class1     </span></span>
-<span><span class="co">#&gt;  9        0.948      0.0522  Class1     </span></span>
-<span><span class="co">#&gt; 10        0.745      0.255   Class1     </span></span>
+<span><span class="co">#&gt;  1        0.988      0.0122  Class1     </span></span>
+<span><span class="co">#&gt;  2        0.992      0.00823 Class1     </span></span>
+<span><span class="co">#&gt;  3        0.993      0.00721 Class1     </span></span>
+<span><span class="co">#&gt;  4        0.993      0.00714 Class1     </span></span>
+<span><span class="co">#&gt;  5        0.991      0.00944 Class1     </span></span>
+<span><span class="co">#&gt;  6        0.982      0.0175  Class1     </span></span>
+<span><span class="co">#&gt;  7        0.965      0.0347  Class1     </span></span>
+<span><span class="co">#&gt;  8        0.922      0.0775  Class1     </span></span>
+<span><span class="co">#&gt;  9        0.799      0.201   Class1     </span></span>
+<span><span class="co">#&gt; 10        0.554      0.446   Class1     </span></span>
 <span><span class="co">#&gt; # ℹ 615 more rows</span></span></code></pre></div>
 <p>The fit looks fairly good when shown with out-of-sample data:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -185,10 +194,27 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_equal</a></span><span class="op">(</span>ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-boundaries-1.png" alt="" width="70%" style="display: block; margin: auto;"></p>
 </div>
+<div class="section level3">
+<h3 id="tabicl">TabICL<a class="anchor" aria-label="anchor" href="#tabicl"></a>
+</h3>
+<p><code><a href="reference/tab_icl.html">tab_icl()</a></code> uses the <code>tabicl</code> Python backend.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">icl_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tab_icl.html">tab_icl</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">icl_mod</span>, <span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="tabfm">TabFM<a class="anchor" aria-label="anchor" href="#tabfm"></a>
+</h3>
+<p><code><a href="reference/tab_fm.html">tab_fm()</a></code> uses the Google Research TabFM backend.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fm_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tab_fm.html">tab_fm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fm_mod</span>, <span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
-<p><a href="https://priorlabs.ai/" class="external-link">PriorLabs</a> created the model. Starting with version 2.5, using TabPFN requires accepting the model license and setting a token. Each model version (v2.5, v2.6, etc.) has its own license that must be accepted individually.</p>
+<p><a href="https://priorlabs.ai/" class="external-link">PriorLabs</a> created the TabPFN model. Starting with version 2.5, using TabPFN requires accepting the model license and setting a token. Each model version (v2.5, v2.6, etc.) has its own license that must be accepted individually.</p>
 <p>To get access, visit <a href="https://ux.priorlabs.ai" class="external-link uri">https://ux.priorlabs.ai</a>, go to the <strong>Licenses</strong> tab (1), and accept the license for each model version you intend to use (2). Then set the <code>TABPFN_TOKEN</code> environment variable with the token from your account. Users who already have <code>TABPFN_TOKEN</code> set can use TabPFN v2 without any additional steps.</p>
 <figure><img src="reference/figures/license.png" alt="Screenshot of the PriorLabs UX portal Licenses page"><figcaption aria-hidden="true">
 Screenshot of the PriorLabs UX portal Licenses page
