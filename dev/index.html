@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Foundation Model Wrappers for Tabular Data in R • tabfm</title>
+<title>Foundation Model Wrappers for Tabular Data in R • tfmr</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/Source_Sans_Pro-0.4.10/font.css" rel="stylesheet">
@@ -13,8 +13,8 @@
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Foundation Model Wrappers for Tabular Data in R">
-<meta name="description" content="Provides a consistent R API for classification and regression with tabular foundation models, including TabPFN and TabICLv2. The calculations are served via Python through reticulate.">
-<meta property="og:description" content="Provides a consistent R API for classification and regression with tabular foundation models, including TabPFN and TabICLv2. The calculations are served via Python through reticulate.">
+<meta name="description" content="Provides a consistent R API for classification and regression with tabular foundation models, including TabPFN, TabICLv2, and TabFM. The calculations are served via Python through reticulate.">
+<meta property="og:description" content="Provides a consistent R API for classification and regression with tabular foundation models, including TabPFN, TabICLv2, and TabFM. The calculations are served via Python through reticulate.">
 <meta name="robots" content="noindex">
 <script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="tabpfn.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
@@ -24,7 +24,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-none" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="index.html">tabfm</a>
+    <a class="navbar-brand me-2" href="index.html">tfmr</a>
 
     <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9000</small>
 
@@ -42,7 +42,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ielbadisy/tabfm/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ielbadisy/tfmr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -51,11 +51,11 @@
 </nav><div class="container template-home" id="container">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="tabpfn">tabpfn<a class="anchor" aria-label="anchor" href="#tabpfn"></a>
+<div class="page-header"><h1 id="tfmr">tfmr<a class="anchor" aria-label="anchor" href="#tfmr"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>tabpfn, meaning prior fitted networks for tabular data, is a deep-learning model. See:</p>
+<p>tfmr, meaning tabular foundation model wrappers for tabular data, is a deep-learning model. See:</p>
 <ul>
 <li>
 <a href="https://arxiv.org/abs/2112.10510" class="external-link"><em>Transformers Can Do Bayesian Inference</em></a> (arXiv, 2021)</li>
@@ -70,13 +70,13 @@
 </h2>
 <p>You can download the package from CRAN via:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tabpfn"</span><span class="op">)</span></span></code></pre></div>
-<p>or you can install the development version of tabpfn like so:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tfmr"</span><span class="op">)</span></span></code></pre></div>
+<p>or you can install the development version of tfmr like so:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://pak.r-lib.org/" class="external-link">pak</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tidymodels/tabpfn"</span><span class="op">)</span>, ask <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p>You’ll need a Python virtual environment to access the underlying library. After installing the R package, tabpfn will install the required Python bits when you first fit a model:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(tabpfn)</span>
+<span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ielbadisy/tfmr"</span><span class="op">)</span>, ask <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>You’ll need a Python virtual environment to access the underlying library. After installing the R package, tfmr will install the required Python bits when you first fit a model:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(tfmr)</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="sc">&gt;</span></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="er">&gt;</span> predictors <span class="ot">&lt;-</span> mtcars[, <span class="sc">-</span><span class="dv">1</span>]</span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="sc">&gt;</span> outcome <span class="ot">&lt;-</span> mtcars[, <span class="dv">1</span>]</span>
@@ -96,7 +96,7 @@
 <span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a> Downloading torch</span>
 <span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>Installed <span class="dv">58</span> packages <span class="cf">in</span> <span class="dv">350</span>ms</span>
 <span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="sc">&gt;</span> mod</span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>tabpfn Regression Model</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>TabPFN Regression Model</span>
 <span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a></span>
 <span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>Training set</span>
 <span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>i <span class="dv">32</span> data points</span>
@@ -107,7 +107,7 @@
 </h2>
 <p>After loading the package:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tabpfn.tidymodels.org">tabpfn</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ielbadisy/tfmr" class="external-link">tfmr</a></span><span class="op">)</span></span></code></pre></div>
 <p>we can fit a model via the standard x/y interface.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">364</span><span class="op">)</span></span>
@@ -131,7 +131,7 @@
 <span><span class="co">#&gt; 5  18.9</span></span>
 <span><span class="co">#&gt; 6  14.4</span></span>
 <span><span class="co">#&gt; 7  22.5</span></span></code></pre></div>
-<p>tabpfn follows the tidymodels prediction convention: a data frame is always returned with a standard set of column names.</p>
+<p>tfmr follows the tidymodels prediction convention: a data frame is always returned with a standard set of column names.</p>
 <p>For a classification model, the outcome should always be a factor vector. For example, using these data from the modeldata package:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
@@ -197,14 +197,14 @@ Screenshot of the PriorLabs UX portal Licenses page
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>Please note that the tabpfn project is released with a <a href="https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that the tfmr project is released with a <a href="https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ielbadisy/tabfm/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/ielbadisy/tabfm/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/ielbadisy/tfmr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/ielbadisy/tfmr/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -220,7 +220,7 @@ Screenshot of the PriorLabs UX portal Licenses page
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing tabfm</a></li>
+<li><a href="authors.html#citation">Citing tfmr</a></li>
 </ul>
 </div>
 
@@ -238,9 +238,9 @@ Screenshot of the PriorLabs UX portal Licenses page
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://CRAN.R-project.org/package=tabpfn" class="external-link"><img src="https://www.r-pkg.org/badges/version/tabpfn" alt="CRAN status"></a></li>
-<li><a href="https://github.com/tidymodels/tabpfn/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/tidymodels/tabpfn/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/tidymodels/tabpfn?branch=main" class="external-link"><img src="https://codecov.io/gh/tidymodels/tabpfn/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://CRAN.R-project.org/package=tfmr" class="external-link"><img src="https://www.r-pkg.org/badges/version/tfmr" alt="CRAN status"></a></li>
+<li><a href="https://github.com/ielbadisy/tfmr/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/ielbadisy/tfmr/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/ielbadisy/tfmr?branch=main" class="external-link"><img src="https://codecov.io/gh/ielbadisy/tfmr/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 

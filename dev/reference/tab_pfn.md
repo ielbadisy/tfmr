@@ -221,7 +221,7 @@ create an ephemeral environment and automatically install the required
 packages. That process would look like this:
 
 
-      > library(tabfm)
+      > library(tfmr)
       >
       > predictors <- mtcars[, -1]
       > outcome <- mtcars[, 1]

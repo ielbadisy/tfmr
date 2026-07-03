@@ -14,16 +14,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/ielbadisy/tabfm/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/ielbadisy/tfmr/blob/main/DESCRIPTION)
 
-Kuhn M, El Badisy I (2026). *tabfm: Foundation Model Wrappers for
-Tabular Data in R*. R package version 0.2.0.9000,
-<https://github.com/ielbadisy/tabfm>.
+Kuhn M, El Badisy I (2026). *tfmr: Foundation Model Wrappers for Tabular
+Data in R*. R package version 0.2.0.9000,
+<https://github.com/ielbadisy/tfmr>.
 
     @Manual{,
-      title = {tabfm: Foundation Model Wrappers for Tabular Data in R},
+      title = {tfmr: Foundation Model Wrappers for Tabular Data in R},
       author = {Max Kuhn and Imad {El Badisy}},
       year = {2026},
       note = {R package version 0.2.0.9000},
-      url = {https://github.com/ielbadisy/tabfm},
+      url = {https://github.com/ielbadisy/tfmr},
     }
