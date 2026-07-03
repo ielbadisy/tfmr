@@ -55,7 +55,7 @@ tab_icl(x, data, training_set_limit = Inf, control = control_tab_icl(), ...)
 - control:
 
   A list from
-  [`control_tab_icl()`](https://tabpfn.tidymodels.org/dev/reference/control_tab_icl.md).
+  [`control_tab_icl()`](https://ielbadisy.github.io/tfmr/dev/reference/control_tab_icl.md).
 
 - formula:
 

@@ -1,9 +1,10 @@
 # Fit a tabular foundation model
 
 `fit_tfmr()` is a small convenience wrapper over
-[`tab_pfn()`](https://tabpfn.tidymodels.org/dev/reference/tab_pfn.md),
-[`tab_icl()`](https://tabpfn.tidymodels.org/dev/reference/tab_icl.md),
-and [`tab_fm()`](https://tabpfn.tidymodels.org/dev/reference/tab_fm.md).
+[`tab_pfn()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_pfn.md),
+[`tab_icl()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_icl.md),
+and
+[`tab_fm()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_fm.md).
 Use the explicit backend functions when you need backend-specific
 arguments.
 

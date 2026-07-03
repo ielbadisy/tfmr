@@ -3,9 +3,9 @@
 tfmr is an R package for tabular foundation models. It provides a
 consistent S3 API for:
 
-- [`tab_pfn()`](https://tabpfn.tidymodels.org/dev/reference/tab_pfn.md)
-- [`tab_icl()`](https://tabpfn.tidymodels.org/dev/reference/tab_icl.md)
-- [`tab_fm()`](https://tabpfn.tidymodels.org/dev/reference/tab_fm.md)
+- [`tab_pfn()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_pfn.md)
+- [`tab_icl()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_icl.md)
+- [`tab_fm()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_fm.md)
 
 These models cover classification and regression on tabular data with
 mixed column types. See:
@@ -19,7 +19,7 @@ mixed column types. See:
   (Nature, 2025)
 
 The R interface is implemented through `reticulate` and follows standard
-tidymodels-style S3 methods.
+S3 methods.
 
 ## Installation
 
@@ -114,8 +114,8 @@ predict(reg_mod, mtcars[26:32, -1])
 #> 7  23.6
 ```
 
-`tfmr` follows the tidymodels prediction convention: a data frame is
-always returned with a standard set of column names.
+`tfmr` uses a consistent prediction convention: a data frame is always
+returned with standard column names.
 
 For a classification model, the outcome should always be a factor
 vector. For example, using these data from the `modeldata` package:
@@ -128,18 +128,15 @@ library(modeldata)
 #> The following object is masked from 'package:datasets':
 #> 
 #>     penguins
-library(ggplot2)
 
 two_cls_train <- parabolic[1:400,  ]
-two_cls_val   <- parabolic[401:500,]
 grid <- expand.grid(X1 = seq(-5.1, 5.0, length.out = 25), 
                     X2 = seq(-5.5, 4.0, length.out = 25))
 
 set.seed(3824)
 cls_mod <- tab_pfn(class ~ ., data = two_cls_train)
 
-grid_pred <- predict(cls_mod, grid)
-grid_pred
+predict(cls_mod, grid)
 #> # A tibble: 625 × 3
 #>    .pred_Class1 .pred_Class2 .pred_class
 #>           <dbl>        <dbl> <fct>      
@@ -156,32 +153,17 @@ grid_pred
 #> # ℹ 615 more rows
 ```
 
-The fit looks fairly good when shown with out-of-sample data:
+### Model Summary
 
-``` r
-
-cbind(grid, grid_pred) |>
-  ggplot(aes(X1, X2)) +
-  geom_point(
-    data = two_cls_val,
-    aes(col = class, pch = class),
-    alpha = 3 / 4,
-    cex = 3
-  ) +
-  geom_contour(
-    aes(z = .pred_Class1),
-    breaks = 1 / 2,
-    col = "black",
-    linewidth = 1
-  ) +
-  coord_equal(ratio = 1)
-```
-
-![](reference/figures/README-boundaries-1.png)
+| Model | Function | Backend |
+|----|----|----|
+| TabPFN | [`tab_pfn()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_pfn.md) | PriorLabs Python package |
+| TabICL | [`tab_icl()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_icl.md) | `tabicl` Python package |
+| TabFM | [`tab_fm()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_fm.md) | Google Research `tabfm` Python package |
 
 ### TabICL
 
-[`tab_icl()`](https://tabpfn.tidymodels.org/dev/reference/tab_icl.md)
+[`tab_icl()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_icl.md)
 uses the `tabicl` Python backend.
 
 ``` r
@@ -192,8 +174,8 @@ predict(icl_mod, mtcars[1:3, -1])
 
 ### TabFM
 
-[`tab_fm()`](https://tabpfn.tidymodels.org/dev/reference/tab_fm.md) uses
-the Google Research TabFM backend.
+[`tab_fm()`](https://ielbadisy.github.io/tfmr/dev/reference/tab_fm.md)
+uses the Google Research TabFM backend.
 
 ``` r
 
@@ -209,20 +191,14 @@ setting a token. Each model version (v2.5, v2.6, etc.) has its own
 license that must be accepted individually.
 
 To get access, visit <https://ux.priorlabs.ai>, go to the **Licenses**
-tab (1), and accept the license for each model version you intend to use
-(2). Then set the `TABPFN_TOKEN` environment variable with the token
-from your account. Users who already have `TABPFN_TOKEN` set can use
-TabPFN v2 without any additional steps.
+tab, and accept the license for each model version you intend to use.
+Then set the `TABPFN_TOKEN` environment variable with the token from
+your account. Users who already have `TABPFN_TOKEN` set can use TabPFN
+v2 without any additional steps.
 
-![Screenshot of the PriorLabs UX portal Licenses
-page](reference/figures/license.png)
-
-Screenshot of the PriorLabs UX portal Licenses page
-
-Also, the model is most effective when a GPU is available (by an order
-of magnitude or two). This may seem obvious to anyone already working
-with deep learning models, but it is a fairly new requirement for those
-strictly working with traditional tabular data models.
+Also, the model is most effective when a GPU is available. This is a
+practical constraint for some workloads but is less relevant for the R
+interface itself.
 
 ## Code of Conduct
 

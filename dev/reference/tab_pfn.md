@@ -134,7 +134,7 @@ tab_pfn(
 - control:
 
   A list of options produced by
-  [`control_tab_pfn()`](https://tabpfn.tidymodels.org/dev/reference/control_tab_pfn.md).
+  [`control_tab_pfn()`](https://ielbadisy.github.io/tfmr/dev/reference/control_tab_pfn.md).
 
 - formula:
 
@@ -352,8 +352,8 @@ preprint* arXiv:2112.10510 (2021).
 
 ## See also
 
-[`control_tab_pfn()`](https://tabpfn.tidymodels.org/dev/reference/control_tab_pfn.md),
-[`predict.tab_pfn()`](https://tabpfn.tidymodels.org/dev/reference/predict.tab_pfn.md)
+[`control_tab_pfn()`](https://ielbadisy.github.io/tfmr/dev/reference/control_tab_pfn.md),
+[`predict.tab_pfn()`](https://ielbadisy.github.io/tfmr/dev/reference/predict.tab_pfn.md)
 
 ## Examples
 

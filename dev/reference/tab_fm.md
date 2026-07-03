@@ -55,7 +55,7 @@ tab_fm(x, data, training_set_limit = Inf, control = control_tab_fm(), ...)
 - control:
 
   A list from
-  [`control_tab_fm()`](https://tabpfn.tidymodels.org/dev/reference/control_tab_fm.md).
+  [`control_tab_fm()`](https://ielbadisy.github.io/tfmr/dev/reference/control_tab_fm.md).
 
 - formula:
 

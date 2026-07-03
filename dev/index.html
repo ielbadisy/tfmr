@@ -16,7 +16,6 @@
 <meta name="description" content="Provides a consistent R API for classification and regression with tabular foundation models, including TabPFN, TabICLv2, and TabFM. The calculations are served via Python through reticulate.">
 <meta property="og:description" content="Provides a consistent R API for classification and regression with tabular foundation models, including TabPFN, TabICLv2, and TabFM. The calculations are served via Python through reticulate.">
 <meta name="robots" content="noindex">
-<script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="tabpfn.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
@@ -70,7 +69,7 @@
 <li>
 <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C7&amp;q=%22Accurate+predictions+on+small+data+with+a+tabular+foundation+model%22" class="external-link"><em>Accurate predictions on small data with a tabular foundation model</em></a> (Nature, 2025)</li>
 </ul>
-<p>The R interface is implemented through <code>reticulate</code> and follows standard tidymodels-style S3 methods.</p>
+<p>The R interface is implemented through <code>reticulate</code> and follows standard S3 methods.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -140,7 +139,7 @@
 <span><span class="co">#&gt; 5  19.4</span></span>
 <span><span class="co">#&gt; 6  14.7</span></span>
 <span><span class="co">#&gt; 7  23.6</span></span></code></pre></div>
-<p><code>tfmr</code> follows the tidymodels prediction convention: a data frame is always returned with a standard set of column names.</p>
+<p><code>tfmr</code> uses a consistent prediction convention: a data frame is always returned with standard column names.</p>
 <p>For a classification model, the outcome should always be a factor vector. For example, using these data from the <code>modeldata</code> package:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
@@ -149,18 +148,15 @@
 <span><span class="co">#&gt; The following object is masked from 'package:datasets':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     penguins</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">two_cls_train</span> <span class="op">&lt;-</span> <span class="va">parabolic</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">400</span>,  <span class="op">]</span></span>
-<span><span class="va">two_cls_val</span>   <span class="op">&lt;-</span> <span class="va">parabolic</span><span class="op">[</span><span class="fl">401</span><span class="op">:</span><span class="fl">500</span>,<span class="op">]</span></span>
 <span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span>X1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5.1</span>, <span class="fl">5.0</span>, length.out <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>, </span>
 <span>                    X2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5.5</span>, <span class="fl">4.0</span>, length.out <span class="op">=</span> <span class="fl">25</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">3824</span><span class="op">)</span></span>
 <span><span class="va">cls_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tab_pfn.html">tab_pfn</a></span><span class="op">(</span><span class="va">class</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">two_cls_train</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">grid_pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">cls_mod</span>, <span class="va">grid</span><span class="op">)</span></span>
-<span><span class="va">grid_pred</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">cls_mod</span>, <span class="va">grid</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 625 × 3</span></span>
 <span><span class="co">#&gt;    .pred_Class1 .pred_Class2 .pred_class</span></span>
 <span><span class="co">#&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;fct&gt;      </span></span>
@@ -175,30 +171,41 @@
 <span><span class="co">#&gt;  9        0.799      0.201   Class1     </span></span>
 <span><span class="co">#&gt; 10        0.554      0.446   Class1     </span></span>
 <span><span class="co">#&gt; # ℹ 615 more rows</span></span></code></pre></div>
-<p>The fit looks fairly good when shown with out-of-sample data:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">grid</span>, <span class="va">grid_pred</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">X1</span>, <span class="va">X2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">two_cls_val</span>,</span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">class</span>, pch <span class="op">=</span> <span class="va">class</span><span class="op">)</span>,</span>
-<span>    alpha <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">4</span>,</span>
-<span>    cex <span class="op">=</span> <span class="fl">3</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">.pred_Class1</span><span class="op">)</span>,</span>
-<span>    breaks <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">2</span>,</span>
-<span>    col <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>    linewidth <span class="op">=</span> <span class="fl">1</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_equal</a></span><span class="op">(</span>ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-boundaries-1.png" alt="" width="70%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="model-summary">Model Summary<a class="anchor" aria-label="anchor" href="#model-summary"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th>Model</th>
+<th>Function</th>
+<th>Backend</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>TabPFN</td>
+<td><code><a href="reference/tab_pfn.html">tab_pfn()</a></code></td>
+<td>PriorLabs Python package</td>
+</tr>
+<tr>
+<td>TabICL</td>
+<td><code><a href="reference/tab_icl.html">tab_icl()</a></code></td>
+<td>
+<code>tabicl</code> Python package</td>
+</tr>
+<tr>
+<td>TabFM</td>
+<td><code><a href="reference/tab_fm.html">tab_fm()</a></code></td>
+<td>Google Research <code>tabfm</code> Python package</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level3">
 <h3 id="tabicl">TabICL<a class="anchor" aria-label="anchor" href="#tabicl"></a>
 </h3>
 <p><code><a href="reference/tab_icl.html">tab_icl()</a></code> uses the <code>tabicl</code> Python backend.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">icl_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tab_icl.html">tab_icl</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">icl_mod</span>, <span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -206,7 +213,7 @@
 <h3 id="tabfm">TabFM<a class="anchor" aria-label="anchor" href="#tabfm"></a>
 </h3>
 <p><code><a href="reference/tab_fm.html">tab_fm()</a></code> uses the Google Research TabFM backend.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fm_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tab_fm.html">tab_fm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fm_mod</span>, <span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -215,10 +222,8 @@
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
 <p><a href="https://priorlabs.ai/" class="external-link">PriorLabs</a> created the TabPFN model. Starting with version 2.5, using TabPFN requires accepting the model license and setting a token. Each model version (v2.5, v2.6, etc.) has its own license that must be accepted individually.</p>
-<p>To get access, visit <a href="https://ux.priorlabs.ai" class="external-link uri">https://ux.priorlabs.ai</a>, go to the <strong>Licenses</strong> tab (1), and accept the license for each model version you intend to use (2). Then set the <code>TABPFN_TOKEN</code> environment variable with the token from your account. Users who already have <code>TABPFN_TOKEN</code> set can use TabPFN v2 without any additional steps.</p>
-<figure><img src="reference/figures/license.png" alt="Screenshot of the PriorLabs UX portal Licenses page"><figcaption aria-hidden="true">
-Screenshot of the PriorLabs UX portal Licenses page
-</figcaption></figure><p>Also, the model is most effective when a GPU is available (by an order of magnitude or two). This may seem obvious to anyone already working with deep learning models, but it is a fairly new requirement for those strictly working with traditional tabular data models.</p>
+<p>To get access, visit <a href="https://ux.priorlabs.ai" class="external-link uri">https://ux.priorlabs.ai</a>, go to the <strong>Licenses</strong> tab, and accept the license for each model version you intend to use. Then set the <code>TABPFN_TOKEN</code> environment variable with the token from your account. Users who already have <code>TABPFN_TOKEN</code> set can use TabPFN v2 without any additional steps.</p>
+<p>Also, the model is most effective when a GPU is available. This is a practical constraint for some workloads but is less relevant for the R interface itself.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
