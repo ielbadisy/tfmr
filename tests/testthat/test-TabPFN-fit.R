@@ -10,7 +10,7 @@ test_that("check_data_constraints errors when too many rows", {
   x <- matrix(0, nrow = 50001, ncol = 2)
   y <- factor(rep(c("a", "b"), length.out = 50001))
   expect_error(
-    tabfm:::check_data_constraints(x, y, control_tab_pfn()),
+    tfmr:::check_data_constraints(x, y, control_tab_pfn()),
     "50,000"
   )
 })
@@ -29,7 +29,7 @@ test_that("check_data_constraints errors when too many columns", {
   x <- matrix(0, nrow = 10, ncol = 2001)
   y <- factor(rep(c("a", "b"), length.out = 10))
   expect_error(
-    tabfm:::check_data_constraints(x, y, control_tab_pfn()),
+    tfmr:::check_data_constraints(x, y, control_tab_pfn()),
     "2000"
   )
 })
@@ -38,7 +38,7 @@ test_that("check_data_constraints errors when too many classes", {
   x <- matrix(0, nrow = 11, ncol = 2)
   y <- factor(letters[1:11])
   expect_error(
-    tabfm:::check_data_constraints(x, y, control_tab_pfn()),
+    tfmr:::check_data_constraints(x, y, control_tab_pfn()),
     "classes"
   )
 })
@@ -46,7 +46,7 @@ test_that("check_data_constraints errors when too many classes", {
 test_that("sample_indicies handles numeric outcomes", {
   set.seed(1)
   molded <- list(outcomes = data.frame(outcome = rnorm(50001)))
-  result <- tabfm:::sample_indicies(molded)
+  result <- tfmr:::sample_indicies(molded)
   expect_length(result, 50000)
   expect_true(all(result >= 1 & result <= 50001))
 })

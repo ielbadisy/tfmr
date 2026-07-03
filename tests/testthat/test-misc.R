@@ -8,6 +8,6 @@ test_that("check_model_version validates correctly", {
 })
 
 test_that("msg_tabpfn_not_available returns correct structure", {
-  msg <- tabfm:::msg_tabpfn_not_available()
+  msg <- tfmr:::msg_tabpfn_not_available()
   expect_named(msg, c("x", "i", "i"))
 })

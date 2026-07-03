@@ -1,16 +1,16 @@
 
-# tabpfn
+# tfmr
 
 <!-- badges: start -->
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/tabpfn)](https://CRAN.R-project.org/package=tabpfn)
-[![R-CMD-check](https://github.com/tidymodels/tabpfn/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/tabpfn/actions/workflows/R-CMD-check.yaml)
+status](https://www.r-pkg.org/badges/version/tfmr)](https://CRAN.R-project.org/package=tfmr)
+[![R-CMD-check](https://github.com/ielbadisy/tfmr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ielbadisy/tfmr/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/tabpfn/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/tabpfn?branch=main)
+coverage](https://codecov.io/gh/ielbadisy/tfmr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ielbadisy/tfmr?branch=main)
 <!-- badges: end -->
 
-tabpfn, meaning prior fitted networks for tabular data, is a
+tfmr, meaning tabular foundation model wrappers for tabular data, is a
 deep-learning model. See:
 
 - [*Transformers Can Do Bayesian
@@ -30,21 +30,21 @@ idiomatic R syntax using standard S3 methods.
 You can download the package from CRAN via:
 
 ``` r
-install.packages("tabpfn")
+install.packages("tfmr")
 ```
 
-or you can install the development version of tabpfn like so:
+or you can install the development version of tfmr like so:
 
 ``` r
 require(pak)
-pak(c("tidymodels/tabpfn"), ask = FALSE)
+pak(c("ielbadisy/tfmr"), ask = FALSE)
 ```
 
 You’ll need a Python virtual environment to access the underlying
-library. After installing the R package, tabpfn will install the
+library. After installing the R package, tfmr will install the
 required Python bits when you first fit a model:
 
-    > library(tabpfn)
+    > library(tfmr)
     >
     > predictors <- mtcars[, -1]
     > outcome <- mtcars[, 1]
@@ -64,7 +64,7 @@ required Python bits when you first fit a model:
      Downloading torch
     Installed 58 packages in 350ms
     > mod
-    tabpfn Regression Model
+    TabPFN Regression Model
 
     Training set
     i 32 data points
@@ -75,7 +75,7 @@ required Python bits when you first fit a model:
 After loading the package:
 
 ``` r
-library(tabpfn)
+library(tfmr)
 ```
 
 we can fit a model via the standard x/y interface.
@@ -108,7 +108,7 @@ predict(reg_mod, mtcars[26:32, -1])
 #> 7  22.5
 ```
 
-tabpfn follows the tidymodels prediction convention: a data frame is
+tfmr follows the tidymodels prediction convention: a data frame is
 always returned with a standard set of column names.
 
 For a classification model, the outcome should always be a factor
@@ -198,7 +198,7 @@ strictly working with traditional tabular data models.
 
 ## Code of Conduct
 
-Please note that the tabpfn project is released with a [Contributor Code
+Please note that the tfmr project is released with a [Contributor Code
 of
 Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.

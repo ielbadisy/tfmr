@@ -108,7 +108,7 @@
 #' packages. That process would look like this:
 #'
 #' \preformatted{
-#'   > library(tabfm)
+#'   > library(tfmr)
 #'   >
 #'   > predictors <- mtcars[, -1]
 #'   > outcome <- mtcars[, 1]
