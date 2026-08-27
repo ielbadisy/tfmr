@@ -5,9 +5,6 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/tfmr)](https://CRAN.R-project.org/package=tfmr)
-[![R-CMD-check](https://github.com/ielbadisy/tfmr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ielbadisy/tfmr/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/ielbadisy/tfmr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ielbadisy/tfmr?branch=main)
 <!-- badges: end -->
 
 tfmr is an R package for tabular foundation models. It provides a
